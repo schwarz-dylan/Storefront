@@ -168,8 +168,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BrandsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModelCategoriesController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ProductStatusController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
@@ -182,6 +186,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\ImageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -205,6 +210,7 @@
     <Content Include="Content\css\style.sea.min.css" />
     <Content Include="Content\css\style.violet.css" />
     <Content Include="Content\css\style.violet.min.css" />
+    <Content Include="Content\css\Styles\ShopPage_CSS.css" />
     <Content Include="Content\icons\demo.html" />
     <Content Include="Content\icons\orion-svg-sprite.svg" />
     <Content Include="Content\icons\styles.css" />
@@ -242,6 +248,14 @@
     <Content Include="Content\img\product-detail-2.jpg" />
     <Content Include="Content\img\product-detail-3.jpg" />
     <Content Include="Content\img\product-detail-4.jpg" />
+    <Content Include="Content\img\Product_Pics\Duo.jpg" />
+    <Content Include="Content\img\Product_Pics\NoImage.png" />
+    <Content Include="Content\img\Product_Pics\ProV1.jpg" />
+    <Content Include="Content\img\Product_Pics\Supersoft.jpg" />
+    <Content Include="Content\img\Product_Pics\TitleistRangeBall.jpg" />
+    <Content Include="Content\img\Product_Pics\TourBXS.jpg" />
+    <Content Include="Content\img\Product_Pics\TP5x.jpg" />
+    <Content Include="Content\img\Product_Pics\ZStar.jpg" />
     <Content Include="Content\img\template-mac.png" />
     <Content Include="Content\js\demo.js" />
     <Content Include="Content\js\front.js" />
@@ -687,6 +701,28 @@
     <Content Include="Views\RolesAdmin\Delete.cshtml" />
     <Content Include="Views\RolesAdmin\Create.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
+    <Content Include="Views\ProductStatus\Create.cshtml" />
+    <Content Include="Views\ProductStatus\Delete.cshtml" />
+    <Content Include="Views\ProductStatus\Details.cshtml" />
+    <Content Include="Views\ProductStatus\Edit.cshtml" />
+    <Content Include="Views\ProductStatus\Index.cshtml" />
+    <Content Include="Views\ProductStatus\Details - Copy.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Products\Index - Copy.cshtml" />
+    <Content Include="Views\ModelCategories\Create.cshtml" />
+    <Content Include="Views\ModelCategories\Delete.cshtml" />
+    <Content Include="Views\ModelCategories\Details.cshtml" />
+    <Content Include="Views\ModelCategories\Edit.cshtml" />
+    <Content Include="Views\ModelCategories\Index.cshtml" />
+    <Content Include="Views\Brands\Create.cshtml" />
+    <Content Include="Views\Brands\Delete.cshtml" />
+    <Content Include="Views\Brands\Details.cshtml" />
+    <Content Include="Views\Brands\Edit.cshtml" />
+    <Content Include="Views\Brands\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

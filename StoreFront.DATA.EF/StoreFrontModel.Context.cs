@@ -29,7 +29,7 @@ namespace StoreFront.DATA.EF
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<ModelCategory> ModelCategories { get; set; }
-        public virtual DbSet<ProductionStatu> ProductionStatus { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductStatus> ProductStatuses { get; set; }
     }
 }

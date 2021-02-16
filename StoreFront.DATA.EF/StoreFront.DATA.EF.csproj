@@ -59,13 +59,14 @@
     <Compile Include="Employee.cs">
       <DependentUpon>StoreFrontModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Metadata\StorefrontMetadata.cs" />
     <Compile Include="ModelCategory.cs">
       <DependentUpon>StoreFrontModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>StoreFrontModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductionStatu.cs">
+    <Compile Include="ProductStatus.cs">
       <DependentUpon>StoreFrontModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,32 +87,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="packages.config" />
     <EntityDeploy Include="StoreFrontModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>StoreFrontModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="packages.config" />
     <None Include="StoreFrontModel.edmx.diagram">
       <DependentUpon>StoreFrontModel.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="StoreFrontModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>StoreFrontModel.Context.cs</LastGenOutput>
       <DependentUpon>StoreFrontModel.edmx</DependentUpon>
+      <LastGenOutput>StoreFrontModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="StoreFrontModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>StoreFrontModel.edmx</DependentUpon>
       <LastGenOutput>StoreFrontModel.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

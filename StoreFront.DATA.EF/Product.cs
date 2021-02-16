@@ -14,16 +14,15 @@ namespace StoreFront.DATA.EF
     
     public partial class Product
     {
+        public int ProductID { get; set; }
         public int ModelID { get; set; }
-        public int BrandID { get; set; }
         public decimal Price { get; set; }
         public Nullable<int> UnitsSold { get; set; }
-        public int ProductionStatusID { get; set; }
+        public int ProductStatusID { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
     
-        public virtual Brand Brand { get; set; }
         public virtual ModelCategory ModelCategory { get; set; }
-        public virtual ProductionStatu ProductionStatu { get; set; }
+        public virtual ProductStatus ProductStatus { get; set; }
     }
 }

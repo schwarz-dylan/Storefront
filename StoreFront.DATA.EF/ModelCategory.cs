@@ -14,10 +14,18 @@ namespace StoreFront.DATA.EF
     
     public partial class ModelCategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ModelCategory()
+        {
+            this.Products = new HashSet<Product>();
+        }
+    
         public int ModelID { get; set; }
-        public string BrandName { get; set; }
+        public int BrandID { get; set; }
         public string ModelName { get; set; }
     
-        public virtual Product Product { get; set; }
+        public virtual Brand Brand { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

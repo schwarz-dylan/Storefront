@@ -12,16 +12,16 @@ namespace StoreFront.DATA.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductionStatu
+    public partial class ProductStatus
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ProductionStatu()
+        public ProductStatus()
         {
             this.Products = new HashSet<Product>();
         }
     
-        public int ProductionStatusID { get; set; }
-        public string ProductionStatusName { get; set; }
+        public int ProductStatusID { get; set; }
+        public string ProductStatusName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

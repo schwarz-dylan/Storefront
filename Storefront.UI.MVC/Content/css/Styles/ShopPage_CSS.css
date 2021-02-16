@@ -1,0 +1,7 @@
+﻿#backgroundimage {
+    /*background-image: url("~/Content/img/grass.jpg");*/
+    width: 100%;
+    display:block;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
