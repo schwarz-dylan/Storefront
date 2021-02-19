@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;//added for CompositingQuality
 using System.IO;//added for FileInfo
 using System;
 
-namespace MVC3.UI.MVC.Utilities
+namespace Storefront.UI.MVC.Utilities
 {
     public class ImageService
     {

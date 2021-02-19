@@ -7,14 +7,84 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using MVC3.UI.MVC.Utilities;
+using Storefront.UI.MVC.Utilities;
 using StoreFront.DATA.EF;
+using PagedList;
+using PagedList.Mvc;
+using Storefront.UI.MVC.Models;
+
 
 namespace Storefront.UI.MVC.Controllers
 {
     public class ProductsController : Controller
     {
         private StoreFrontEntities db = new StoreFrontEntities();
+
+        [HttpPost]
+        public ActionResult AddToCart(int qty, int productID)
+        {
+            //Create an empty version of the LOCAL shopping cart (dictionary collection)
+            Dictionary<int, CartItemViewModel> shoppingCart = null;
+
+            //check the cart in session (GLOBAL)
+            //if the cart has stuff in it then assign its value to the local dictionary
+            if (Session["cart"] != null)
+            {
+                shoppingCart = (Dictionary<int, CartItemViewModel>)Session["cart"];
+
+            }//end if
+
+
+            //if the GLOBAL version is empty
+            else
+            {
+                //create an empty instance of the LOCAL (dictionary)
+                shoppingCart = new Dictionary<int, CartItemViewModel>();
+            }//end else
+
+
+            //get the product object being added - FirstOrDefault() allows for a null value
+            //.Single() would fail if the book was not found - Runtime Exception
+            Product product = db.Products.Where(b => b.ProductID == productID).FirstOrDefault();
+
+            //if the productID (bookID) is null, return them to the books index
+            if (product == null)
+            {
+                return RedirectToAction("Index");
+            }//end if
+
+            //product is valid
+            else
+            {
+
+                //Create the shoppingCartViewModel Object
+                CartItemViewModel item = new CartItemViewModel(qty, product);
+
+                //if the productID is represented in the shopping cart, increase of qty
+                if (shoppingCart.ContainsKey(product.ProductID))
+                {
+                    shoppingCart[product.ProductID].Qty += qty;
+
+                }//end if
+
+                //if the produc tisnt in the cart...add it.
+                else
+                {
+                    shoppingCart.Add(product.ProductID, item);
+                }//end else
+
+                //update the GLOBAL (session) cart with the values from our LOCAL (dictionary)
+                Session["cart"] = shoppingCart;
+
+            }//end else
+
+            //as long as the product was added - then we will redirect to the ShoppingCart Index
+            return RedirectToAction("Index", "ShoppingCart");
+
+        }//end result
+
+
+
         private string imgName;
 
         // GET: Products
@@ -292,5 +362,88 @@ namespace Storefront.UI.MVC.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Create our own conncection (databaseContext) to the our Data Structure
+        private StoreFrontEntities ctx = new StoreFrontEntities();
+
+       
+
+        public ActionResult ClientSide()
+        {
+            var products = ctx.Products.Include(p => p.ModelCategory)
+                                       .Include(p => p.ProductStatus);
+
+
+            return View(products.ToList());
+        }//end action result
+
+        public ActionResult ProductsQS(string searchFilter)
+        {
+            //2 Options
+            //-Search has NOT been used (initial pg demand or subsequent demands)
+            //-Search HAS been used and return filtered results
+
+            //get a list of products
+            var products = ctx.Products;
+
+
+            //branch - No filter
+            if (string.IsNullOrEmpty(searchFilter))
+            {
+                //return all results
+                return View(products.ToList());
+
+            }//end if
+
+
+
+            else
+            {
+
+
+                //keyword syntax
+                var filteredProducts = (from p in products
+                                        where p.ModelCategory.ModelName.Contains(searchFilter.ToLower())
+                                        select p).ToList();
+
+
+
+
+
+
+
+                return View(filteredProducts);
+            }//end else
+
+
+
+
+        }//end result
+
+
+        public ActionResult ProductsMVCPaging(string searchString, int page = 1)
+        {
+            int pageSize = 5;
+
+            var products = ctx.Products.OrderBy(p => p.ModelCategory.ModelName).ToList();
+
+            #region Search Logic
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(p => p.ModelCategory.ModelName.ToLower().Contains(searchString.ToLower())).ToList();
+            }//end if
+
+            ViewBag.SearchString = searchString;
+
+            #endregion
+
+            return View(products.ToPagedList(page, pageSize));
+
+
+        }//end action result
+
+
+
     }
 }
