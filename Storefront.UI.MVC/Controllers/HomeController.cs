@@ -16,26 +16,26 @@ namespace Storefront.UI.MVC.Controllers
             return View();
         }
 
-        public ActionResult Shop()
-        {
+        //public ActionResult Shop()
+        //{
             
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult ProductDetail()
-        {
+        //public ActionResult ProductDetail()
+        //{
             
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult Cart()
-        {
+        //public ActionResult Cart()
+        //{
 
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public ActionResult Contact()
         {

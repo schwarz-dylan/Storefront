@@ -19,7 +19,7 @@ namespace Storefront.UI.MVC.Controllers
             {
                 shoppingCart = new Dictionary<int, CartItemViewModel>();
                 //"No cart items" message
-                ViewBag.Message = "There are no books in your cart";
+                ViewBag.Message = "There are no items in your cart";
             }
             //if there is 'stuff' in the cart
             else
@@ -32,13 +32,13 @@ namespace Storefront.UI.MVC.Controllers
         }//end action
 
         [HttpPost]
-        public ActionResult UpdateCart(int bookID, int qty)
+        public ActionResult UpdateCart(int productID, int qty)
         {
             //if the user zeros out the qty using the update button, remove the book from the cart
             if (qty == 0)
             {
                 //removeFromCart()
-                RemoveFromCart(bookID);
+                RemoveFromCart(productID);
 
                 return RedirectToAction("Index");
             }//end if
@@ -49,7 +49,7 @@ namespace Storefront.UI.MVC.Controllers
                 (Dictionary<int, CartItemViewModel>)Session["cart"];
 
             //update the quantity in the local storage
-            shoppingCart[bookID].Qty = qty;
+            shoppingCart[productID].Qty = qty;
 
             //return the local cart to session
             Session["cart"] = shoppingCart;
@@ -57,7 +57,7 @@ namespace Storefront.UI.MVC.Controllers
             //logic to display no items in cart message if they update the last item in the cart to 0
             if (shoppingCart.Count == 0)
             {
-                ViewBag.Message = "There are no books in your cart.";
+                ViewBag.Message = "There are no items in your cart.";
             }//end if
 
             //redirect to the index - we need the logic in the index action to run so that all values are processed (return view wont work here)

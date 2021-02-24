@@ -258,11 +258,11 @@
     <Content Include="Content\img\product-detail-4.jpg" />
     <Content Include="Content\img\Product_Pics\Duo.jpg" />
     <Content Include="Content\img\Product_Pics\NoImage.png" />
-    <Content Include="Content\img\Product_Pics\ProV1.jpg" />
+    <Content Include="Content\img\Product_Pics\PROV1.jpg" />
     <Content Include="Content\img\Product_Pics\Supersoft.jpg" />
     <Content Include="Content\img\Product_Pics\TitleistRangeBall.jpg" />
     <Content Include="Content\img\Product_Pics\TourBXS.jpg" />
-    <Content Include="Content\img\Product_Pics\TP5x.jpg" />
+    <Content Include="Content\img\Product_Pics\TP5Xi.jpg" />
     <Content Include="Content\img\Product_Pics\ZStar.jpg" />
     <Content Include="Content\img\template-mac.png" />
     <Content Include="Content\js\demo.js" />
@@ -734,6 +734,7 @@
     <Content Include="Views\Brands\Index.cshtml" />
     <Content Include="Views\Filters\Index.cshtml" />
     <Content Include="Views\Filters\ClientSide.cshtml" />
+    <Content Include="Views\ShoppingCart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -741,7 +742,6 @@
     <Folder Include="Content\vendor\node-sass\src\" />
     <Folder Include="Content\vendor\node-sass\test\" />
     <Folder Include="Content\vendor\nouislider\distribute\" />
-    <Folder Include="Views\ShoppingCart\" />
     <Folder Include="_Archive\vendor\jquery.cookie\test\" />
     <Folder Include="_Archive\vendor\node-sass\src\" />
     <Folder Include="_Archive\vendor\node-sass\test\" />

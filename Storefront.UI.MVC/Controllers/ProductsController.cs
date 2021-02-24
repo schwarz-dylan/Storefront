@@ -45,7 +45,7 @@ namespace Storefront.UI.MVC.Controllers
 
             //get the product object being added - FirstOrDefault() allows for a null value
             //.Single() would fail if the book was not found - Runtime Exception
-            Product product = db.Products.Where(b => b.ProductID == productID).FirstOrDefault();
+            Product product = db.Products.Where(b => b.ProductID == productID).Include("ModelCategory").FirstOrDefault();
 
             //if the productID (bookID) is null, return them to the books index
             if (product == null)
@@ -220,6 +220,7 @@ namespace Storefront.UI.MVC.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -241,6 +242,7 @@ namespace Storefront.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "ProductID,ModelID,Price,UnitsSold,ProductStatusID,Description,ImageUrl")] Product product, HttpPostedFileBase ballPicture)
         {
             if (ModelState.IsValid)

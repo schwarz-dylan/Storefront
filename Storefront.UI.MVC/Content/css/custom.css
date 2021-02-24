@@ -3449,3 +3449,13 @@ code {
     .breadcrumb-item.active {
         color: #aaa;
     }
+
+
+
+    .productImage{
+        width:75%;
+    }
+
+#productContainer{
+    margin-top:5%;
+}
