@@ -16,6 +16,7 @@
         <AssociationConnector Association="StoreFrontModel.FK_Employees_Employees" />
         <AssociationConnector Association="StoreFrontModel.FK_Products_ModelCategories" />
         <AssociationConnector Association="StoreFrontModel.FK_Products_ProductStatuses" />
+        <EntityTypeShape EntityType="StoreFrontModel.UserDetail" Width="1.5" PointX="3.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

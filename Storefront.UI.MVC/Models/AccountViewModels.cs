@@ -64,6 +64,26 @@ namespace Storefront.UI.MVC.Models
 
     public class RegisterViewModel
     {
+        //------------Custom Register for user Details------------------
+
+        [Required(ErrorMessage = "First name is required.")]
+        [StringLength(25, ErrorMessage = "The first name must be 25 characters or less.")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Last name is required.")]
+        [StringLength(25, ErrorMessage = "The Last name must be 25 characters or less.")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "Enter Zip Code")]
+        [StringLength(11, MinimumLength = 5, ErrorMessage = "Zip Code must be 5-11 digits.")]
+        [Display(Name = "Zip Code")]
+        public string ZipCode { get; set; }
+
+        //--------------------------------------------------------------------
+
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

@@ -85,6 +85,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>StoreFrontModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="UserDetail.cs">
+      <DependentUpon>StoreFrontModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

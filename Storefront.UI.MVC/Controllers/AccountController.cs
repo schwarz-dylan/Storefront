@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Storefront.UI.MVC.Models;
+using StoreFront.DATA.EF;
 
 namespace Storefront.UI.MVC.Controllers
 {
@@ -155,10 +156,24 @@ namespace Storefront.UI.MVC.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    //----Custom User Registration---------
+                    //By default there is no reference to the database in this controller (all other objects are created using ViewModels).
+                    UserDetail newUserDetail = new UserDetail();
+                    newUserDetail.UserID = user.Id;
+                    newUserDetail.FirstName = model.FirstName;
+                    newUserDetail.LastName = model.LastName;
+
+                    //Save the UserDetail object to EF and Presist/save to the database
+                    StoreFrontEntities ctx = new StoreFrontEntities();
+                    ctx.UserDetails.Add(newUserDetail);//Sends to EF
+                    ctx.SaveChanges();//Persists/save to the DB
 
                     UserManager.AddToRole(user.Id, "Customer"); //MVC 2 Account controller for ref
 
-                    return RedirectToAction("Index", "Home");
+                    
+
+
+                    return View("Login");
                 }
                 AddErrors(result);
             }
