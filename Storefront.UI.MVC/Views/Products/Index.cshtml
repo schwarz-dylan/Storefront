@@ -1,14 +1,18 @@
 ﻿@model IEnumerable<StoreFront.DATA.EF.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Products";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>

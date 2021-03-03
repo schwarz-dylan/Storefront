@@ -8,7 +8,7 @@
     }
 
 
-  }
+}
 
 <!DOCTYPE html>
 <html>
@@ -41,6 +41,9 @@
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <!-- theme stylesheet-->
     <link rel="stylesheet" href="~/Content/css/custom.css" id="theme-stylesheet">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="~/Content/css/custom.css">
     <!-- Favicon-->
@@ -62,7 +65,7 @@
         <header class="header bg-white">
             <div class="container px-0 px-lg-3">
                 <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0">
-                    <a class="navbar-brand" href="index.html"><span class="font-weight-bold text-uppercase text-dark">The Golf Ball Boutique</span></a>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><span class="font-weight-bold text-uppercase text-dark">The Golf Ball Boutique</span></a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -73,19 +76,19 @@
                             <li class="nav-item">
                                 <!-- Link--><a class="nav-link" href="@Url.Action("Index", "Products")">Shop</a>
                             </li>
-                            <li class="nav-item">
-                                <!-- Link--><a class="nav-link" href="@Url.Action("Details", "Products")">Product detail</a>
-                            </li>
+                            @*<li class="nav-item">
+                                    <!-- Link--><a class="nav-link" href="@Url.Action("Details", "Products")">Product detail</a>
+                                </li> *@
                             @*<li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                                <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown"><a class="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a class="dropdown-item border-0 transition-link" href="shop.html">Category</a><a class="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a class="dropdown-item border-0 transition-link" href="cart.html">Shopping cart</a><a class="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a></div>
-                            </li>*@
+                                    <a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                    <div class="dropdown-menu mt-3" aria-labelledby="pagesDropdown"><a class="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a class="dropdown-item border-0 transition-link" href="shop.html">Category</a><a class="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a class="dropdown-item border-0 transition-link" href="cart.html">Shopping cart</a><a class="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a></div>
+                                </li>*@
                         </ul>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="@Url.Action("Index", "ShoppingCart")"><i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small class="text-gray">(@cartItems)</small></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="#"> <i class="far fa-heart mr-1"></i><small class="text-gray"> (0)</small></a></li>
+                            @*<li class="nav-item"><a class="nav-link" href="#"> <i class="far fa-heart mr-1"></i><small class="text-gray"> (0)</small></a></li>*@
                             @*<li class="nav-item"><a class="nav-link" href="#"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>*@
 
                             @Html.Partial("_LoginPartial")
@@ -97,9 +100,19 @@
             </div>
         </header>
 
-        <main>
-            @RenderBody()
-        </main>
+        <div id="main" class="section">
+            <div class="container">
+                <div class="row">
+                    <div id="MessageDisplay">
+                        <div class="col-md-10 col-md-offset-1" id="MessageContent"></div>
+                    </div>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        @*<main>
+                @RenderBody()
+            </main>*@
 
 
         <footer class="bg-dark text-white">
@@ -108,13 +121,13 @@
                     <div class="col-md-4 mb-3 mb-md-0">
                         <h6 class="text-uppercase mb-3">Customer services</h6>
                         <ul class="list-unstyled mb-0">
-                            <li><a class="footer-link" href="#">Help &amp; Contact Us</a></li>
-                            <li><a class="footer-link" href="#">Returns &amp; Refunds</a></li>
+                            <li><a class="footer-link" href="@Url.Action("Index", "Home")">Help &amp; Contact Us</a></li>
+                            @*<li><a class="footer-link" href="#">Returns &amp; Refunds</a></li>
                             <li><a class="footer-link" href="#">Online Stores</a></li>
-                            <li><a class="footer-link" href="#">Terms &amp; Conditions</a></li>
+                            <li><a class="footer-link" href="#">Terms &amp; Conditions</a></li>*@
                         </ul>
                     </div>
-                    <div class="col-md-4 mb-3 mb-md-0">
+                    @*<div class="col-md-4 mb-3 mb-md-0">
                         <h6 class="text-uppercase mb-3">Company</h6>
                         <ul class="list-unstyled mb-0">
                             <li><a class="footer-link" href="#">What We Do</a></li>
@@ -122,14 +135,14 @@
                             <li><a class="footer-link" href="#">Latest Posts</a></li>
                             <li><a class="footer-link" href="#">FAQs</a></li>
                         </ul>
-                    </div>
+                    </div>*@
                     <div class="col-md-4">
                         <h6 class="text-uppercase mb-3">Social media</h6>
                         <ul class="list-unstyled mb-0">
-                            <li><a class="footer-link" href="#">Twitter</a></li>
-                            <li><a class="footer-link" href="#">Instagram</a></li>
+                            <li><a class="footer-link" href="http://dylanschwarz.com">Personal Site</a></li>
+                            @*<li><a class="footer-link" href="#">Instagram</a></li>
                             <li><a class="footer-link" href="#">Tumblr</a></li>
-                            <li><a class="footer-link" href="#">Pinterest</a></li>
+                            <li><a class="footer-link" href="#">Pinterest</a></li>*@
                         </ul>
                     </div>
                 </div>
@@ -162,6 +175,12 @@
         <script src="~/Content/vendor/owl.carousel2.thumbs/owl.carousel2.thumbs.min.js"></script>
         <script src="~/Content/js/front.js"></script>
 
+        <!--jQueryUI Script-->
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <!--Ajax Script-->
+        <script src="https://cdn.jsdelivr.net/jquery.ajax.unobtrusive/3.2.4/jquery.unobtrusive-ajax.min.js"></script>
+
         <script>
             // ------------------------------------------------------- //
             //   Inject SVG Sprite -
@@ -193,7 +212,7 @@
 
     </div>
 
-    
+
 
 </body>
 </html>
