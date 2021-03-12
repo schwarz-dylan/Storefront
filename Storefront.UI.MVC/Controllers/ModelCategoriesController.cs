@@ -14,39 +14,7 @@ namespace Storefront.UI.MVC.Controllers
     {
         private StoreFrontEntities db = new StoreFrontEntities();
 
-        #region AJAX Operations
-
-        //#region AJAX Delete
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public JsonResult AjaxDelete(int id)
-        //{
-        //    //get the publisher from the database
-        //    ModelCategories modCat = db.ModelCategories.Find(id);
-
-
-        //    //remove the publisher from the EF
-        //    db.ModelCategories.Remove(modCat);
-
-        //    //save the changes to the database
-        //    db.SaveChanges();
-
-        //    //create a message to send to the user as a json result
-        //    var message = $"Deleted the following Model Category from the Database: {modCat.ModelName}";
-
-        //    //return the jsonResult
-        //    return Json(new
-        //    {
-        //        id = id,
-        //        message = message
-        //    });
-
-        //}//end result
-
-        //#endregion
-
-        #endregion
-
-
+       
 
         // GET: ModelCategories
         public ActionResult Index()

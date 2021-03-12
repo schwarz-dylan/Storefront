@@ -14,6 +14,100 @@ namespace Storefront.UI.MVC.Controllers
     {
         private StoreFrontEntities db = new StoreFrontEntities();
 
+        #region AJAX OPS
+        #region AJAX DELETE
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult AjaxDelete(int id)
+        {
+            
+            ProductStatus prodStat = db.ProductStatuses.Find(id);
+
+
+            
+            db.ProductStatuses.Remove(prodStat);
+
+            
+            db.SaveChanges();
+
+            
+            var message = $"Deleted the following Product Status from the Database: {prodStat.ProductStatusName}";
+
+            //return the jsonResult
+            return Json(new
+            {
+                id = id,
+                message = message
+            });
+
+        }//end result
+
+
+        #endregion
+
+        #region AJAX DETAILS
+        [HttpGet]
+        public PartialViewResult OrderStatusdetails(int id)
+        {
+            //retrieve the Product Status by ID
+            ProductStatus prodStat = db.ProductStatuses.Find(id);
+
+            
+            return PartialView(prodStat);
+
+
+            //for this view:
+            //right click and add a partial view
+            //scaffold it to details
+            //ProductStatus - model
+            //CHECK the partialView Checkbox
+
+        }//end
+        #endregion
+
+        #region AJAX CREATE
+        
+        public JsonResult AjaxCreate(ProductStatus productStatus)
+        {
+            //even though this is a json result the VIEW is a partial view
+            //so that we can render it in th Index (our div that we created)
+
+            //Hard code that each productStatus will be active (no checkbox in the form)
+            //productStatus.IsActive = true;
+
+
+            db.ProductStatuses.Add(productStatus);
+            db.SaveChanges();
+            return Json(productStatus);
+        }
+
+        #endregion
+        #region AJAX EDIT (GET)
+        public PartialViewResult PublisherEdit(int id)
+        {
+            //retrieve the publisher and return the view with data populated for updates
+            ProductStatus productStatus = db.ProductStatuses.Find(id);
+
+
+            return PartialView(productStatus);
+        }//end result
+
+        #endregion
+        #region AJAX EDIT (POST)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AjaxEdit(ProductStatus productStatus)
+        {
+            db.Entry(productStatus).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(productStatus);
+        }
+
+        #endregion
+        #endregion
+
+        //Any usused (replaced by ajax) actions below should be commented out or deleted entirely
+        //as they still will route to the old views. This can only be achieved by URL Hacking.
+
         // GET: ProductStatus
         public ActionResult Index()
         {
