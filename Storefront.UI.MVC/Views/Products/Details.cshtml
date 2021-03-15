@@ -1,0 +1,87 @@
+﻿@model StoreFront.DATA.EF.Product
+
+@{
+    ViewBag.Title = "Product Details";
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+    <div class="container" id="productContainer">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="~/Content/img/Product_Pics/@Model.ImageUrl" alt="product image" title="@Model.ModelCategory.ModelName" class="productImage" />
+
+            </div>
+            <div class="col-md-6">
+                <h2>@Model.ModelCategory.ModelName</h2>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Price)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UnitsSold)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.UnitsSold)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ModelCategory.ModelName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ModelCategory.ModelName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ProductStatus.ProductStatusName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductStatus.ProductStatusName)
+                    </dd>
+
+                    <dd>
+                        @using (Html.BeginForm("AddToCart", "Products", new { productID = Model.ProductID }, FormMethod.Post))
+                        {
+
+                            @Html.HiddenFor(x => x.ProductID)
+
+                            //textbox to enter qty
+                            @Html.TextBox("Qty", 1, new { @class = "form-control", style = "max-width: 75px;display:inline;" })
+
+                            //the submit button
+                            <input type="submit" value="Add To Cart" class="btn btn-primary" name="qty" />
+                        }
+                    </dd>
+
+                </dl>
+                <p>
+                    @Html.ActionLink("Back to List", "Index")
+                </p>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+

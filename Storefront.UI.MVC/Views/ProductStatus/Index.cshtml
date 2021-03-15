@@ -1,0 +1,197 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.ProductStatus>
+
+@{
+    ViewBag.Title = "Production Status";
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+    @*<p>
+            @Html.ActionLink("Create New", "Create")
+        </p>*@
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="row">
+            <div class="col-md-10">
+                @*@Html.ActionLink("Create New", "Create")*@
+                <button id="toggleProductStatusCreate" class="btn btn-primary">Create ProductStatus</button>
+                <div id="ProductStatusCreate">
+                    <!--Render the partial view-->
+                    @Html.Partial("AjaxCreate", new StoreFront.DATA.EF.ProductStatus())
+                </div>
+            </div>
+
+        </div>
+
+    }
+</div>
+
+
+<table id="ProductStatusTable" class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductStatusName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="Product-@item.ProductStatusID">
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductStatusName)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id=item.ProductStatusID }) |*@
+                <a href="" class="EditLink" id="@item.ProductStatusID">Edit</a> |
+
+
+                @*@Html.ActionLink("Details", "Details", new { id = item.ProductStatusID }) |*@
+                <a href="" class="DetailsLink" id="@item.ProductStatusID">Details</a> |
+
+
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ProductStatusID })*@
+                @Ajax.ActionLink("Delete", "AjaxDelete", "ProductStatus", new { id = item.ProductStatusID }, new AjaxOptions
+           {
+               HttpMethod = "POST",
+               Confirm = "Are you sure you want to delete" + item.ProductStatusID + "from Product Statuses?",
+               OnSuccess = "deleteConfirmed"
+           })
+
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!--placeholders for the jQuery UI Modal pop ups-->
+<div id="ProductStatusDetails"></div>
+<div id="ProductStatusEdit"></div>
+
+
+@section scripts
+    {
+    <script>
+            //deleteConfirmed()
+            function deleteConfirmed(response)
+            {
+                //remove the row from the table (in html without a browser refresher)
+                var rowId = '#Product-' + response.id;
+                $('#ProductStatusTable').find(rowId).remove();
+
+                //display status message (in our div above the renderBody() in the layout)
+                $('#MessageContent').html("<div class='alert alert-success'>" + response.message + "</div>");
+            }//end function
+
+            //AJAX details dialog box (modal from jQueryUI) - Make sure you hav ethe script for jQueryUI in your layout
+            $('a.DetailsLink').click(function (e) {
+                e.preventDefault();
+                $('#ProductStatusDetails').data('pId', $(this).attr('id')).dialog({
+                    //dialog box properties (you can find these at jqueryUI.com - api doc view the modal info)
+                    modal: true,
+                    open: function () {
+                        var data = $(this).data('pId');
+                        $(this).load('/ProductStatus/ProductStatusDetails/' + data)
+                    },
+                    width: 400,
+                    height: 200,
+                    title: 'Product Status Details',
+                    resizable: false
+                });
+            });
+
+
+            //Toggling the create form open and closed
+            //Show the create form when the publisher button is clicked toggle the visibility back and forth each time its clicked
+            //Start PublisherCreate not visible
+            $('#ProductStatusCreate').hide();
+        $('#toggleProductStatusCreate').click(function () {
+            $('#ProductStatusCreate').toggle();
+                //extra -change the appearance of the button based on the toggle/visibility
+            if ($('#ProductStatusCreate').is(':visible')) {
+                $('#toggleProductStatusCreate').html('Cancel');
+                $('#toggleProductStatusCreate').attr('class', "btn btn-danger");
+                }//end if
+                else
+                {
+                $('#toggleProductStatusCreate').html('Create Publisher');
+                $('#toggleProductStatusCreate').attr('class', "btn btn-primary");
+                }
+
+            });
+
+
+            //Process (or submit) the CREATE FORM
+        $('#ProductStatusCreateForm').submit(function (e) {
+                //serialize (package the object/form info for transport)
+                var formData = $(this).serializeArray();
+                //Interrupt the normal submit event
+                e.preventDefault();
+                //message the user while processing
+                $('#MessageContent').html("<div class='alert alert-info'>Please wait...</div>");
+
+                //call to ajax and process the form
+                $.ajax({
+                    //action and controller to process the create
+                    url:"@Url.Action("AjaxCreate", "ProductStatus")",
+                    //type
+                    type: "POST",
+                    //define the data as out serialized form
+                    data: formData,
+                    //define the data type as json
+                    dataType: "json",
+                    //if it works, show the success message
+                    success: function (data) {
+                        $('#MessageContent').html("<div class='alert alert-success'>Your record was added!</div>");
+                        //clear the form
+                        $('#ProductStatusCreateForm')[0].reset();
+                        //add the (temporary) row to the table (remember the browser is being manually updated) so we will see a message to refresh the view to see the links - You could code those in...Chuck leaves them out so you can see the asynchronos activity. When the view refreshed, the new record will load into the table WITH the links (new pull from the database with our record added)
+                        $(function () {
+                            var row = '<tr><td>' + data.ProductStatusName +
+                                '</td><td>' + data.ProductStatusName;                                ;
+                            $('#ProductStatusTable').append(row);
+
+                            //close the form and show the create button again
+                            $('#ProductStatusCreate').toggle();//closes the form
+                            $('#toggleProductStatusCreate').html('Create Product Status');//change text on button
+                            $('#toggleProductStatusCreate').attr('class', 'btn btn-primary');//changes the button to blue
+
+                        });
+                    },
+                    //error - show the alert message in the div above the render body
+                    error: function (e) {
+                        $('#MessageContent').html(
+                            "<div class='alert alert-warning'>There was an error." +
+                            " Please try again or contact the site administrator</div>"
+                        );
+
+                    }
+                });
+
+            });
+
+        //**************************Show the Edit Dialog Box************************************
+        $('a.EditLink').click(function (e) {
+            e.preventDefault();
+            $('#ProductStatusEdit').data('pId', $(this).attr('id')).dialog({
+                //define the properties for the modal
+                modal: true,
+                open: function () {
+                    var data = $(this).data('pId');
+                    $(this).load('/ProductStatus/ProductStatusEdit/' + data);
+                },
+                width: 600,
+                height: 440,
+                title: 'Edit Product Status',
+                resizable: false
+            });
+        });
+
+
+
+
+
+    </script>
+}

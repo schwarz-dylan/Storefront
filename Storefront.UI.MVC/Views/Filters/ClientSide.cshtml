@@ -1,0 +1,70 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.Product>
+
+@{
+    ViewBag.Title = "Products List";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ModelCategory.ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ProductStatus.ProductStatusName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelCategory.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductStatus.ProductStatusName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.ProductID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
+
+}

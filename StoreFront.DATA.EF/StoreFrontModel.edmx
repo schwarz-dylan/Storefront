@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StoreFrontModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandID" />
+          </Key>
+          <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployeeLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DirectReportID" Type="int" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ModelCategories">
+          <Key>
+            <PropertyRef Name="ModelID" />
+          </Key>
+          <Property Name="ModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="UnitsSold" Type="int" />
+          <Property Name="ProductStatusID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="ImageUrl" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ProductStatuses">
+          <Key>
+            <PropertyRef Name="ProductStatusID" />
+          </Key>
+          <Property Name="ProductStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductStatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ZipCode" Type="varchar" MaxLength="11" />
+        </EntityType>
+        <Association Name="FK_Employees_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Employees1" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employees1">
+              <PropertyRef Name="DirectReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ModelCategories_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="ModelCategories" Type="Self.ModelCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="ModelCategories">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ModelCategories">
+          <End Role="ModelCategories" Type="Self.ModelCategories" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModelCategories">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductStatuses">
+          <End Role="ProductStatuses" Type="Self.ProductStatuses" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStatuses">
+              <PropertyRef Name="ProductStatusID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="StoreFrontModelStoreContainer">
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ModelCategories" EntityType="Self.ModelCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductStatuses" EntityType="Self.ProductStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employees_Departments" Association="Self.FK_Employees_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Employees" Association="Self.FK_Employees_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Employees1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ModelCategories_Brand" Association="Self.FK_ModelCategories_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="ModelCategories" EntitySet="ModelCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ModelCategories" Association="Self.FK_Products_ModelCategories">
+            <End Role="ModelCategories" EntitySet="ModelCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductStatuses" Association="Self.FK_Products_ProductStatuses">
+            <End Role="ProductStatuses" EntitySet="ProductStatuses" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="StoreFrontModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="StoreFrontEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Brands" EntityType="StoreFrontModel.Brand" />
+          <EntitySet Name="Departments" EntityType="StoreFrontModel.Department" />
+          <EntitySet Name="Employees" EntityType="StoreFrontModel.Employee" />
+          <EntitySet Name="ModelCategories" EntityType="StoreFrontModel.ModelCategory" />
+          <EntitySet Name="Products" EntityType="StoreFrontModel.Product" />
+          <EntitySet Name="ProductStatuses" EntityType="StoreFrontModel.ProductStatus" />
+          <AssociationSet Name="FK_ModelCategories_Brand" Association="StoreFrontModel.FK_ModelCategories_Brand">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="ModelCategory" EntitySet="ModelCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Departments" Association="StoreFrontModel.FK_Employees_Departments">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Employees" Association="StoreFrontModel.FK_Employees_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee1" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ModelCategories" Association="StoreFrontModel.FK_Products_ModelCategories">
+            <End Role="ModelCategory" EntitySet="ModelCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductStatuses" Association="StoreFrontModel.FK_Products_ProductStatuses">
+            <End Role="ProductStatus" EntitySet="ProductStatuses" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="UserDetails" EntityType="StoreFrontModel.UserDetail" />
+        </EntityContainer>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="BrandID" />
+          </Key>
+          <Property Name="BrandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ModelCategories" Relationship="StoreFrontModel.FK_ModelCategories_Brand" FromRole="Brand" ToRole="ModelCategory" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="StoreFrontModel.FK_Employees_Departments" FromRole="Department" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeFirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeLastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DirectReportID" Type="Int32" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="StoreFrontModel.FK_Employees_Departments" FromRole="Employee" ToRole="Department" />
+          <NavigationProperty Name="Employees1" Relationship="StoreFrontModel.FK_Employees_Employees" FromRole="Employee" ToRole="Employee1" />
+          <NavigationProperty Name="Employee1" Relationship="StoreFrontModel.FK_Employees_Employees" FromRole="Employee1" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="ModelCategory">
+          <Key>
+            <PropertyRef Name="ModelID" />
+          </Key>
+          <Property Name="ModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="ModelName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Brand" Relationship="StoreFrontModel.FK_ModelCategories_Brand" FromRole="ModelCategory" ToRole="Brand" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_ModelCategories" FromRole="ModelCategory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="UnitsSold" Type="Int32" />
+          <Property Name="ProductStatusID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ModelCategory" Relationship="StoreFrontModel.FK_Products_ModelCategories" FromRole="Product" ToRole="ModelCategory" />
+          <NavigationProperty Name="ProductStatus" Relationship="StoreFrontModel.FK_Products_ProductStatuses" FromRole="Product" ToRole="ProductStatus" />
+        </EntityType>
+        <EntityType Name="ProductStatus">
+          <Key>
+            <PropertyRef Name="ProductStatusID" />
+          </Key>
+          <Property Name="ProductStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductStatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="StoreFrontModel.FK_Products_ProductStatuses" FromRole="ProductStatus" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_ModelCategories_Brand">
+          <End Type="StoreFrontModel.Brand" Role="Brand" Multiplicity="1" />
+          <End Type="StoreFrontModel.ModelCategory" Role="ModelCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
+            </Principal>
+            <Dependent Role="ModelCategory">
+              <PropertyRef Name="BrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Departments">
+          <End Type="StoreFrontModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="StoreFrontModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Employees">
+          <End Type="StoreFrontModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="StoreFrontModel.Employee" Role="Employee1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="Employee1">
+              <PropertyRef Name="DirectReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ModelCategories">
+          <End Type="StoreFrontModel.ModelCategory" Role="ModelCategory" Multiplicity="1" />
+          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ModelCategory">
+              <PropertyRef Name="ModelID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductStatuses">
+          <End Type="StoreFrontModel.ProductStatus" Role="ProductStatus" Multiplicity="1" />
+          <End Type="StoreFrontModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductStatus">
+              <PropertyRef Name="ProductStatusID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="StoreFrontModelStoreContainer" CdmEntityContainer="StoreFrontEntities">
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="StoreFrontModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="StoreFrontModel.Department">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="StoreFrontModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DirectReportID" ColumnName="DirectReportID" />
+                <ScalarProperty Name="EmployeeLastName" ColumnName="EmployeeLastName" />
+                <ScalarProperty Name="EmployeeFirstName" ColumnName="EmployeeFirstName" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ModelCategories">
+            <EntityTypeMapping TypeName="StoreFrontModel.ModelCategory">
+              <MappingFragment StoreEntitySet="ModelCategories">
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="StoreFrontModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProductStatusID" ColumnName="ProductStatusID" />
+                <ScalarProperty Name="UnitsSold" ColumnName="UnitsSold" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ModelID" ColumnName="ModelID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductStatuses">
+            <EntityTypeMapping TypeName="StoreFrontModel.ProductStatus">
+              <MappingFragment StoreEntitySet="ProductStatuses">
+                <ScalarProperty Name="ProductStatusName" ColumnName="ProductStatusName" />
+                <ScalarProperty Name="ProductStatusID" ColumnName="ProductStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="StoreFrontModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

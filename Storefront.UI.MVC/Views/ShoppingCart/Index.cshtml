@@ -1,0 +1,100 @@
+﻿@*@model IEnumerable<StoreFront.DATA.EF.Product>*@
+
+
+@model Dictionary<int, Storefront.UI.MVC.Models.CartItemViewModel>
+
+
+@{
+    ViewBag.Title = "Shopping Cart";
+
+
+    decimal? cartTotal = 0;
+    int totalCountOfItems = 0;
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+   
+
+    @if (ViewBag.Message != null)
+    {
+        <h3 class="text-center text-warning">@ViewBag.Message</h3>
+    }
+
+
+    else
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    Golf Ball
+                </th>
+                <th>
+                    Product Image
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Total
+                </th>
+
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.Product.ModelCategory.ModelName)
+                    </td>
+                    <td>
+                        <img src="~/Content/img/Product_Pics/t_@item.Value.Product.ImageUrl" alt="book cover" title="@item.Value.Product.ModelCategory.ModelName" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Value.Product.Price)
+                    </td>
+
+
+                    <td>
+                        <!--Allow for a change to Quantity-->
+                        @using (Html.BeginForm("UpdateCart", "ShoppingCart", FormMethod.Post))
+                        {
+                            //Use a Hidden field to pass the book for This line item
+                            @Html.Hidden("productID", item.Value.Product.ModelID)
+                            @Html.TextBox("qty", item.Value.Qty, new { @class = "form-control", style = "max-width:75px;display:inline;" })
+                            <input type="submit" value="Update Quantity" class="btn btn-primary" />
+                        }
+                        @{totalCountOfItems += item.Value.Qty;}
+                    </td>
+                    <td>
+                        <!--Calculate the line total and display in currency format-->
+                        @{
+                            decimal? lineTotal = item.Value.Product.Price * item.Value.Qty;
+                            <!--Update the CART TOTAL by summing the line total-->
+                            cartTotal += lineTotal;
+                        }
+                        @string.Format($"{lineTotal:c}")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove From Cart", "RemoveFromCart", new { id = item.Value.Product.ProductID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <p>
+            You Have @totalCountOfItems @(totalCountOfItems > 1 ? "products" : "product") in your cart.
+            Your total before taxes and shipping is @string.Format($"{cartTotal:c}")
+        </p>
+    }
+
+    <p>
+        @Html.ActionLink("Back to Shopping", "Index", "Products", null, new { @Class = "btn btn-danger" })
+    </p>
+
+</div>

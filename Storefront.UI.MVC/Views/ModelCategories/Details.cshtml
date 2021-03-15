@@ -1,0 +1,36 @@
+﻿@model StoreFront.DATA.EF.ModelCategory
+
+@{
+    ViewBag.Title = "Model Details";
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+    <div>
+        @*<h4>ModelCategory</h4>*@
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ModelName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ModelName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Brand.BrandName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Brand.BrandName)
+            </dd>
+
+        </dl>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ModelID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

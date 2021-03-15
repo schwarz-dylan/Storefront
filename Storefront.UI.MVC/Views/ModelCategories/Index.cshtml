@@ -1,0 +1,47 @@
+﻿@model IEnumerable<StoreFront.DATA.EF.ModelCategory>
+
+@{
+    ViewBag.Title = "Model Categories";
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <div class="col-md-2">
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+        </div>
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ModelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand.BrandName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand.BrandName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ModelID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ModelID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ModelID })
+            </td>
+        </tr>
+    }
+
+</table>
